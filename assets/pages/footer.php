@@ -1,5 +1,5 @@
 <head>
-    <link rel="stylesheet" href="./assets/pages/footer.php">
+    <link rel="stylesheet" href="./assets/css/footer.css">
 </head>
 <footer class="footer">
     <div class="container">
@@ -39,9 +39,9 @@
         <div class="footer-section">
             <h4>Download App</h4>
             <p>Save $3 with App New User Only</p>
-            <img src="images./qr.png" alt="">
-            <img src="images./gps.webp" alt="" class="gps">
-            <img src="images./aps.png" alt="" class="gps">
+            <img src="./assets/images/qr.png" alt="">
+            <img src="./assets/images/gps.webp" alt="" class="gps">
+            <img src="./assets/images/aps.png" alt="" class="gps">
             <div class="social-icons">
                 <a href="#">&#xf09a;</a>
                 <a href="#">&#xf099;</a>
