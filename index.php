@@ -8,158 +8,106 @@
     <title></title>
 </head>
 
+<style>
+.red-box {
+    width: 12px;
+    height: 28px;
+    background-color: red;
+    border-radius: 4px;
+}
+</style>
+
 <body>
     <?php include "./assets/pages/header.php" ?>
-    <!DOCTYPE html>
-    <html lang="en">
+    <!-- Hero Section -->
+    <section class="hero">
+        <img src="assets/images/farmer.png" class="img-fluid w-100" alt="Hero Image">
+    </section>
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>E-Commerce Homepage</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    </head>
+    <!-- Browse by Category -->
+    <section class="container mt-5 gap-4">
+        <div class="d-flex w-100">
+            <div class="red-box"></div>
+            <span class="ms-2">Category</span>
+        </div>
+        <div class="w-100">
+            <h3>Browse By Category</h3>
+        </div>
 
-    <body>
-        <!-- Hero Section -->
-        <section class="container-fluid p-0">
-            <img src="assets/images/hero.jpg" class="img-fluid w-100" alt="Hero Image">
-        </section>
-
-        <!-- Category Section -->
-        <section class="container my-5">
-            <h3 class="text-center">Browse By Category</h3>
-            <div class="row text-center mt-4">
-                <div class="col-md-3">
-                    <img src="assets/images/category1.jpg" class="img-fluid" alt="Category 1">
+        <div id="categoryCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner text-center">
+                <div class="carousel-item active">
+                    <img src="assets/images/cat1.png" class="img-fluid" alt="Category 1">
                 </div>
-                <div class="col-md-3">
-                    <img src="assets/images/category2.jpg" class="img-fluid" alt="Category 2">
+                <div class="carousel-item">
+                    <img src="assets/images/cat2.png" class="img-fluid" alt="Category 2">
                 </div>
-                <div class="col-md-3">
-                    <img src="assets/images/category3.jpg" class="img-fluid" alt="Category 3">
+                <div class="carousel-item">
+                    <img src="assets/images/cat3.png" class="img-fluid" alt="Category 3">
                 </div>
-                <div class="col-md-3">
-                    <img src="assets/images/category4.jpg" class="img-fluid" alt="Category 4">
+                <div class="carousel-item">
+                    <img src="assets/images/cat4.png" class="img-fluid" alt="Category 4">
                 </div>
             </div>
-        </section>
+            <button class="carousel-control-prev" type="button" data-bs-target="#categoryCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#categoryCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </button>
+        </div>
 
-        <!-- Best Selling Products -->
-        <section class="container my-5">
-            <h3 class="text-start">Best Selling Products</h3>
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="assets/images/product1.jpg" class="card-img-top" alt="Product 1">
-                        <div class="card-body">
-                            <h5 class="card-title">The North Coat</h5>
-                            <p class="text-danger">$250.00</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="assets/images/product2.jpg" class="card-img-top" alt="Product 2">
-                        <div class="card-body">
-                            <h5 class="card-title">Gucci Leather Bag</h5>
-                            <p class="text-danger">$960.00</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="assets/images/product3.jpg" class="card-img-top" alt="Product 3">
-                        <div class="card-body">
-                            <h5 class="card-title">PC Liquid Cooler</h5>
-                            <p class="text-danger">$120.00</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="assets/images/product4.jpg" class="card-img-top" alt="Product 4">
-                        <div class="card-body">
-                            <h5 class="card-title">Small Bookshelf</h5>
-                            <p class="text-danger">$75.00</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    </section>
 
-        <!-- Explore Products -->
-        <section class="container my-5">
-            <h3 class="text-start">Explore Our Products</h3>
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="assets/images/product5.jpg" class="card-img-top" alt="Product 5">
-                        <div class="card-body">
-                            <h5 class="card-title">Camera</h5>
-                            <p class="text-danger">$500.00</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="assets/images/product6.jpg" class="card-img-top" alt="Product 6">
-                        <div class="card-body">
-                            <h5 class="card-title">Gaming Laptop</h5>
-                            <p class="text-danger">$1200.00</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="assets/images/product7.jpg" class="card-img-top" alt="Product 7">
-                        <div class="card-body">
-                            <h5 class="card-title">Football Shoes</h5>
-                            <p class="text-danger">$85.00</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <img src="assets/images/product8.jpg" class="card-img-top" alt="Product 8">
-                        <div class="card-body">
-                            <h5 class="card-title">Gaming Controller</h5>
-                            <p class="text-danger">$60.00</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <!-- Best Selling Products -->
 
-        <!-- Featured Section -->
-        <section class="container my-5">
-            <h3 class="text-start">New Arrival</h3>
-            <div class="row">
-                <div class="col-md-6">
-                    <img src="assets/images/ps5.jpg" class="img-fluid" alt="PS5">
-                    <h4>PlayStation 5</h4>
-                    <p>Experience next-gen gaming.</p>
-                </div>
-                <div class="col-md-6">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <img src="assets/images/speaker.jpg" class="img-fluid" alt="Speakers">
-                            <p>Speakers</p>
-                        </div>
-                        <div class="col-md-6">
-                            <img src="assets/images/perfume.jpg" class="img-fluid" alt="Perfume">
-                            <p>Perfume</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </body>
+    <!-- Browse by Category with Slider -->
+    <section class="container mt-5">
+        <div class="d-flex w-100">
+            <div class="red-box"></div>
+            <span class="ms-2">This Month</span>
+        </div>
+        <div class="w-100">
+            <h3>Best Selling Products</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-3"><img src="assets/images/prod1.png" class="img-fluid"></div>
+            <div class="col-md-3"><img src="assets/images/prod2.png" class="img-fluid"></div>
+            <div class="col-md-3"><img src="assets/images/prod3.png" class="img-fluid"></div>
+            <div class="col-md-3"><img src="assets/images/prod4.png" class="img-fluid"></div>
+        </div>
+    </section>
 
-    </html>
+    <!-- Featured Product Banner -->
+    <section class="container-fluid mt-5 text-center bg-dark text-white p-5">
+        <h2>Enhance Your Music Experience</h2>
+        <button class="btn btn-success">Buy Now</button>
+    </section>
 
-    <?php include "./assets/pages/footer.php" ?>
+    <!-- Explore Our Products -->
+    <section class="container mt-5">
+        <h3>Explore Our Products</h3>
+        <div class="row">
+            <div class="col-md-3"><img src="assets/images/prod1.png" class="img-fluid"></div>
+            <div class="col-md-3"><img src="assets/images/prod1.png" class="img-fluid"></div>
+            <div class="col-md-3"><img src="assets/images/prod1.png" class="img-fluid"></div>
+            <div class="col-md-3"><img src="assets/images/prod1.png" class="img-fluid"></div>
+        </div>
+    </section>
+
+    <!-- Promotional Section -->
+    <section class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 bg-secondary text-white p-5 text-center">PlayStation 5</div>
+            <div class="col-md-3 bg-dark text-white p-5 text-center">Speakers</div>
+            <div class="col-md-3 bg-dark text-white p-5 text-center">Perfume</div>
+        </div>
+    </section>
+</body>
+
+</html>
+
+<?php include "./assets/pages/footer.php" ?>
 </body>
 
 </html>
