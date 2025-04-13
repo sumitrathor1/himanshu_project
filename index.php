@@ -34,6 +34,9 @@ include './assets/pages/_connection.php';
     <link
         href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -491,8 +494,10 @@ include './assets/pages/_connection.php';
 
                         <div class="d-flex align-items-center">
                             <?php
-                            if ($_SESSION['user_type'] == "admin") {
-                                echo '<button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#addCategoryModal">Add Category</button>';
+                            if(isset($_SESSION['user_type'])){
+                                if ($_SESSION['user_type'] == "admin") {
+                                    echo '<button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#addCategoryModal">Add Category</button>';
+                                }
                             }
                             ?>
                             <a href="#" class="btn btn-primary me-2">View All</a>
@@ -510,35 +515,40 @@ include './assets/pages/_connection.php';
                     <div class="category-carousel swiper">
                         <div class="swiper-wrapper">
                             <?php 
+                            $query = "SELECT * FROM categories ORDER BY add_date DESC";
+                            $result = mysqli_query($conn, $query);
 
-                        $query = "SELECT * FROM categories ORDER BY add_date DESC";
-                        $result = mysqli_query($conn, $query);
+                            if (mysqli_num_rows($result) > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    $id = $row['id'];
+                                    $imagePath = './assets/images/category/' . $row['image'];
+                                    $title = htmlspecialchars($row['title']);
 
-        if (mysqli_num_rows($result) > 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                $imagePath = './assets/images/category/' . $row['image'];
-                $title = htmlspecialchars($row['title']);
-                echo '
-                    <a href="category.php?category=' . urlencode($title) . '" class="nav-link swiper-slide text-center">
-                        <img src="' . $imagePath . '" class="rounded-circle" alt="' . $title . '" style="width: 100px; height: 100px; object-fit: cover;">
-                        <h4 class="fs-6 mt-3 fw-normal category-title">' . $title . '</h4>
-                    </a>';
-            }
-        } else {
-            echo '<p class="text-center text-muted">No categories found.</p>';
-        }
-        ?>
-                            <a href="category.html" class="nav-link swiper-slide text-center">
-                                <?php if($_SESSION['user_type'] == "admin"){
-                                    // edit icon
-                                    // Delet  
-                                }?>
-                                <img src="./assets/images/category-thumb-1.jpg" class="rounded-circle"
-                                    alt="Category Thumbnail">
-                                <h4 class="fs-6 mt-3 fw-normal category-title">Fruits & Veges</h4>
-                            </a>
+                                    echo '<div class="swiper-slide text-center position-relative category-slide" data-id="' . $id . '">';
+
+                                    // Show edit/delete buttons for admin
+                                    if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === "admin") {
+                                        echo '
+                                            <div class="position-absolute top-0 end-0 m-2 d-flex">
+                                                <i class="fas fa-edit me-2 text-primary" style="cursor: pointer;" title="Edit"></i>
+                                                <i class="fas fa-trash-alt text-danger delete-category" data-id="' . $id . '" style="cursor: pointer;" title="Delete"></i>
+                                            </div>';
+                                    }
+
+                                    echo '
+                                        <a href="category.php?category=' . urlencode($title) . '" class="nav-link text-center d-block">
+                                            <img src="' . $imagePath . '" class="rounded-circle" alt="' . $title . '" style="width: 100px; height: 100px; object-fit: cover;">
+                                            <h4 class="fs-6 mt-3 fw-normal category-title">' . $title . '</h4>
+                                        </a>
+                                    </div>';
+                                }
+                            } else {
+                                echo '<p class="text-center text-muted">No categories found.</p>';
+                            }
+                            ?>
                         </div>
                     </div>
+
 
 
                 </div>
@@ -2906,6 +2916,42 @@ include './assets/pages/_connection.php';
                 console.error("Error:", err);
                 alert("Failed to add category");
             });
+    });
+    </script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Attach click listener to delete icons
+        document.querySelectorAll(".delete-category").forEach(button => {
+            button.addEventListener("click", function() {
+                const categoryId = this.getAttribute("data-id");
+
+                if (confirm("Are you sure you want to delete this category?")) {
+                    // AJAX call
+                    fetch('delete_category.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: 'id=' + encodeURIComponent(categoryId)
+                        })
+                        .then(response => response.text())
+                        .then(data => {
+                            if (data.trim() === "success") {
+                                // Remove the category from the DOM
+                                const categoryDiv = this.closest(".category-slide");
+                                if (categoryDiv) categoryDiv.remove();
+                            } else {
+                                alert("Error deleting category: " + data);
+                            }
+                        })
+                        .catch(error => {
+                            console.error("AJAX Error:", error);
+                            alert("Something went wrong. Please try again.");
+                        });
+                }
+            });
+        });
     });
     </script>
 
