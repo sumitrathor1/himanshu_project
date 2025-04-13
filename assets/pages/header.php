@@ -47,16 +47,34 @@
                         <circle cx="20" cy="21" r="1" />
                         <path d="M1 1h4l2 13h13l2-9H6" />
                     </svg> </a>
-                <a href="#offcanvasUserProfile" class="nav-link" data-bs-toggle="offcanvas" role="button"
+
+
+                <?php
+if (isset($_SESSION['user_id'])) { 
+//     $user_id = $_SESSION['user_id'];
+//     $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
+//     $stmt->bind_param("i", $user_id);
+//     $stmt->execute();
+//     $stmt->bind_result($user_type);
+//     $stmt->fetch();
+//     $stmt->close();
+                echo '<a href="#offcanvasUserProfile" class="nav-link" data-bs-toggle="offcanvas" role="button"
                     aria-controls="offcanvasUserProfile">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
                         stroke-width="2" viewBox="0 0 24 24">
                         <circle cx="12" cy="8" r="4" />
                         <path d="M12 14c-4 0-8 2-8 4v2h16v-2c0-2-4-4-8-4z" />
                     </svg>
-                </a>
+                </a>';
 
-
+//                 if ($user_type === 'admin') {
+//                 echo '<a class="nav-link" href="admin-dashboard.php">Admin Panel</a>';
+//                 }
+} 
+else {
+    echo '<a class="nav-link" href="login.php">Login</a>';
+}
+?>
             </div>
         </div>
     </div>
@@ -288,7 +306,7 @@
             <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i> Activity Log
         </a>
         <hr>
-        <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+        <a class="dropdown-item text-danger" href="logout.php">
             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i> Logout
         </a>
     </div>

@@ -1,3 +1,9 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();    
+    include './assets/pages/_connection.php';
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
