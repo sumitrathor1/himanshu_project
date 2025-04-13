@@ -1,8 +1,8 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();    
-    include './assets/pages/_connection.php';
 }
+include './assets/pages/_connection.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -336,6 +336,42 @@ if (session_status() === PHP_SESSION_NONE) {
         <div class="preloader">
         </div>
     </div>
+
+    <!-- Add Category Modal -->
+    <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <form method="POST" action="add_category.php" enctype="multipart/form-data" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addCategoryModalLabel">Add New Category</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="categoryImage" class="form-label">Upload Image</label>
+                        <input type="file" class="form-control" id="categoryImage" name="category_image"
+                            accept="image/*" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="categoryTitle" class="form-label">Category Title</label>
+                        <input type="text" class="form-control" id="categoryTitle" name="category_title" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="addDate" class="form-label">Add Date</label>
+                        <input type="date" class="form-control" id="addDate" name="add_date" required>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Add Category</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <?php include "./assets/pages/header.php" ?>
     <section
         style="background-image: url('./assets/images/banner-1.jpg'); background-repeat: no-repeat; background-size: cover;">
@@ -450,19 +486,22 @@ if (session_status() === PHP_SESSION_NONE) {
         <div class="container-lg">
             <div class="row">
                 <div class="col-md-12">
-
                     <div class="section-header d-flex flex-wrap justify-content-between mb-5">
                         <h2 class="section-title">Category</h2>
 
                         <div class="d-flex align-items-center">
+                            <?php
+                            if ($_SESSION['user_type'] == "admin") {
+                                echo '<button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#addCategoryModal">Add Category</button>';
+                            }
+                            ?>
                             <a href="#" class="btn btn-primary me-2">View All</a>
                             <div class="swiper-buttons">
                                 <button class="swiper-prev category-carousel-prev btn btn-yellow">❮</button>
-                                <button class="swiper-next category-carousel-next btn btn-yellow">❯</button>
+                                <button class="swiper-next category-carousel-nex    t btn btn-yellow">❯</button>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
             <div class="row">
@@ -470,69 +509,37 @@ if (session_status() === PHP_SESSION_NONE) {
 
                     <div class="category-carousel swiper">
                         <div class="swiper-wrapper">
-                            <a href="category.html" class="nav-link swiper-slide text-center">
-                                <img src="./assets/images/category-thumb-1.jpg" class="rounded-circle"
-                                    alt="Category Thumbnail">
-                                <h4 class="fs-6 mt-3 fw-normal category-title">Fruits & Veges</h4>
-                            </a>
-                            <a href="category.html" class="nav-link swiper-slide text-center">
-                                <img src="./assets/images/category-thumb-2.jpg" class="rounded-circle"
-                                    alt="Category Thumbnail">
-                                <h4 class="fs-6 mt-3 fw-normal category-title">Breads & Sweets</h4>
-                            </a>
-                            <a href="category.html" class="nav-link swiper-slide text-center">
-                                <img src="./assets/images/category-thumb-3.jpg" class="rounded-circle"
-                                    alt="Category Thumbnail">
-                                <h4 class="fs-6 mt-3 fw-normal category-title">Fruits & Veges</h4>
-                            </a>
-                            <a href="category.html" class="nav-link swiper-slide text-center">
-                                <img src="./assets/images/category-thumb-4.jpg" class="rounded-circle"
-                                    alt="Category Thumbnail">
-                                <h4 class="fs-6 mt-3 fw-normal category-title">Beverages</h4>
-                            </a>
-                            <a href="category.html" class="nav-link swiper-slide text-center">
-                                <img src="./assets/images/category-thumb-5.jpg" class="rounded-circle"
-                                    alt="Category Thumbnail">
-                                <h4 class="fs-6 mt-3 fw-normal category-title">Meat Products</h4>
-                            </a>
-                            <a href="category.html" class="nav-link swiper-slide text-center">
-                                <img src="./assets/images/category-thumb-6.jpg" class="rounded-circle"
-                                    alt="Category Thumbnail">
-                                <h4 class="fs-6 mt-3 fw-normal category-title">Breads</h4>
-                            </a>
-                            <a href="category.html" class="nav-link swiper-slide text-center">
-                                <img src="./assets/images/category-thumb-7.jpg" class="rounded-circle"
-                                    alt="Category Thumbnail">
-                                <h4 class="fs-6 mt-3 fw-normal category-title">Fruits & Veges</h4>
-                            </a>
-                            <a href="category.html" class="nav-link swiper-slide text-center">
-                                <img src="./assets/images/category-thumb-8.jpg" class="rounded-circle"
-                                    alt="Category Thumbnail">
-                                <h4 class="fs-6 mt-3 fw-normal category-title">Breads & Sweets</h4>
-                            </a>
-                            <a href="category.html" class="nav-link swiper-slide text-center">
-                                <img src="./assets/images/category-thumb-1.jpg" class="rounded-circle"
-                                    alt="Category Thumbnail">
-                                <h4 class="fs-6 mt-3 fw-normal category-title">Fruits & Veges</h4>
-                            </a>
-                            <a href="category.html" class="nav-link swiper-slide text-center">
-                                <img src="./assets/images/category-thumb-1.jpg" class="rounded-circle"
-                                    alt="Category Thumbnail">
-                                <h4 class="fs-6 mt-3 fw-normal category-title">Beverages</h4>
-                            </a>
-                            <a href="category.html" class="nav-link swiper-slide text-center">
-                                <img src="./assets/images/category-thumb-1.jpg" class="rounded-circle"
-                                    alt="Category Thumbnail">
-                                <h4 class="fs-6 mt-3 fw-normal category-title">Meat Products</h4>
-                            </a>
-                            <a href="category.html" class="nav-link swiper-slide text-center">
-                                <img src="./assets/images/category-thumb-1.jpg" class="rounded-circle"
-                                    alt="Category Thumbnail">
-                                <h4 class="fs-6 mt-3 fw-normal category-title">Breads</h4>
-                            </a>
+                            <?php 
 
+                        $query = "SELECT * FROM categories ORDER BY add_date DESC";
+                        $result = mysqli_query($conn, $query);
+
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $imagePath = './assets/images/category/' . $row['image'];
+                $title = htmlspecialchars($row['title']);
+                echo '
+                    <a href="category.php?category=' . urlencode($title) . '" class="nav-link swiper-slide text-center">
+                        <img src="' . $imagePath . '" class="rounded-circle" alt="' . $title . '" style="width: 100px; height: 100px; object-fit: cover;">
+                        <h4 class="fs-6 mt-3 fw-normal category-title">' . $title . '</h4>
+                    </a>';
+            }
+        } else {
+            echo '<p class="text-center text-muted">No categories found.</p>';
+        }
+        ?>
+                            <a href="category.html" class="nav-link swiper-slide text-center">
+                                <?php if($_SESSION['user_type'] == "admin"){
+                                    // edit icon
+                                    // Delet  
+                                }?>
+                                <img src="./assets/images/category-thumb-1.jpg" class="rounded-circle"
+                                    alt="Category Thumbnail">
+                                <h4 class="fs-6 mt-3 fw-normal category-title">Fruits & Veges</h4>
+                            </a>
                         </div>
                     </div>
+
 
                 </div>
             </div>
@@ -2873,6 +2880,35 @@ if (session_status() === PHP_SESSION_NONE) {
     </script>
     <script src="./assets/js/plugins.js"></script>
     <script src="./assets/js/script.js"></script>
+
+    <script>
+    document.querySelector("#addCategoryModal form").addEventListener("submit", function(
+        e) {
+        e.preventDefault();
+
+        const form = e.target;
+        const formData = new FormData(form);
+
+        fetch("add_category.php", {
+                method: "POST",
+                body: formData
+            })
+            .then(res => res.text())
+            .then(response => {
+                alert(response); // or show a toast
+                form.reset();
+                const modal = bootstrap.Modal.getInstance(document
+                    .getElementById("addCategoryModal"));
+                modal.hide();
+                // Optionally refresh category list here
+            })
+            .catch(err => {
+                console.error("Error:", err);
+                alert("Failed to add category");
+            });
+    });
+    </script>
+
 
 </body>
 

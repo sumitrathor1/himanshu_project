@@ -17,7 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result && $result->num_rows === 1) {
         $user = $result->fetch_assoc();
         $_SESSION['user_id'] = $user['user_id'];
-        $_SESSION['user_name'] = $user['name']; 
+        $_SESSION['user_name'] = $user['name'];
+        $_SESSION['user_type'] = $user['user_type'];
         header("Location: ./");
         exit();
     } else {

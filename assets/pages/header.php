@@ -51,13 +51,7 @@
 
                 <?php
 if (isset($_SESSION['user_id'])) { 
-//     $user_id = $_SESSION['user_id'];
-//     $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
-//     $stmt->bind_param("i", $user_id);
-//     $stmt->execute();
-//     $stmt->bind_result($user_type);
-//     $stmt->fetch();
-//     $stmt->close();
+    $user_id = $_SESSION['user_id'];
                 echo '<a href="#offcanvasUserProfile" class="nav-link" data-bs-toggle="offcanvas" role="button"
                     aria-controls="offcanvasUserProfile">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
@@ -291,7 +285,7 @@ else {
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasUserProfile"
     aria-labelledby="offcanvasUserProfileLabel">
     <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasUserProfileLabel">User Menu</h5>
+        <h5 class="offcanvas-title" id="offcanvasUserProfileLabel"><?php echo $_SESSION['user_name'] ?></h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
 
