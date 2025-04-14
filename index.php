@@ -412,43 +412,6 @@ include './assets/pages/_connection.php';
         </div>
     </div>
 
-    <!-- Add Best Selling Product Modal -->
-    <div class="modal fade" id="addBestProductModal" tabindex="-1" aria-labelledby="addBestProductModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <form id="addBestProductForm" enctype="multipart/form-data">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Add Best Selling Product</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="product-title" class="form-label">Product Title</label>
-                            <input type="text" name="title" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="product-price" class="form-label">Price</label>
-                            <input type="number" step="0.01" name="price" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="product-old-price" class="form-label">Old Price</label>
-                            <input type="number" step="0.01" name="old_price" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label for="product-image" class="form-label">Product Image</label>
-                            <input type="file" name="image" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Add Product</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
-
     <?php include "./assets/pages/header.php" ?>
     <section
         style="background-image: url('./assets/images/banner-1.jpg'); background-repeat: no-repeat; background-size: cover;">
@@ -570,7 +533,7 @@ include './assets/pages/_connection.php';
                             <?php
                             if(isset($_SESSION['user_type'])){
                                 if ($_SESSION['user_type'] == "admin") {
-                                    echo '<button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#addCategoryModal">Add Category</button>';
+                                    echo        '<button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#addCategoryModal">Add Category</button>';
                                 }
                             }
                             ?>
@@ -2576,7 +2539,7 @@ include './assets/pages/_connection.php';
         // Handle form submission
         document.getElementById("editCategoryForm").addEventListener("submit", function(e) {
             e.preventDefault();
-            Best selling products
+            // Best selling products
 
             const formData = new FormData(this);
 
@@ -2600,33 +2563,6 @@ include './assets/pages/_connection.php';
         });
     });
     </script>
-
-    <script>
-    document.getElementById("addBestProductForm").addEventListener("submit", function(e) {
-        e.preventDefault();
-
-        const formData = new FormData(this);
-
-        fetch("insert_best_product.php", {
-                method: "POST",
-                body: formData
-            })
-            .then(res => res.text())
-            .then(data => {
-                if (data.trim() === "success") {
-                    alert("Product added!");
-                    location.reload();
-                } else {
-                    alert("Error: " + data);
-                }
-            })
-            .catch(err => {
-                console.error("AJAX Error:", err);
-                alert("Something went wrong!");
-            });
-    });
-    </script>
-
 </body>
 
 </html>
