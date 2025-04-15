@@ -1,3 +1,12 @@
+<?php
+include "../_connection.php";
+
+$user_id = $_GET['user_id'] ?? 0;
+
+// Get user name
+$user_query = $conn->query("SELECT name FROM users WHERE user_id = $user_id");
+$user = $user_query->fetch_assoc();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,16 +17,16 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>Admin Dashboard</title>
+    <title>User</title>
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
+    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet" />
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+    <link href="../css/sb-admin-2.min.css" rel="stylesheet" />
 </head>
 
 <body id="page-top">
@@ -27,7 +36,7 @@
         <div id="content-wrapper" class="d-flex flex-column">
             <!-- Main Content -->
             <div id="content">
-                <?php include "_header.php" ?>
+                <?php include "../_header.php" ?>
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- Page Heading -->
@@ -171,34 +180,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- User Table -->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">
-                                User Table
-                            </h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="userTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>User ID</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Phone</th>
-                                            <th>Address</th>
-                                            <th>Created At</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- Data will be filled via AJAX -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <!-- /.container-fluid -->
             </div>
@@ -218,124 +199,122 @@
     </div>
     <!-- End of Page Wrapper -->
 
-
-
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="../js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="../vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
+    <script src="../js/demo/datatables-demo.js"></script>
     <script>
     $(document).ready(function() {
-        // Function to fetch order counts based on statuses
-        function fetchOrderCounts() {
-            $.ajax({
-                url: '_fetch_order_counts.php', // PHP file to fetch data
-                method: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    // Update the UI with the fetched order counts
-                    $('#pending-count').text(response.pending);
-                    $('#shipping-count').text(response.shipping);
-                    $('#complete-count').text(response.completed);
-                    $('#canceled-count').text(response.canceled);
-                    $('#returned-count').text(response.returned);
-                },
-                error: function(xhr, status, error) {
-                    console.log("Error: " + error);
-                }
-            });
-        }
+        const userId = <?php echo (int)$_GET['user_id']; ?>;
 
-        // Fetch order counts when the page loads
-        fetchOrderCounts();
+        // Fetch order count per status for the user
+        $.ajax({
+            url: '_fetch_user_status_counts.php',
+            method: 'GET',
+            data: {
+                user_id: userId
+            },
+            dataType: 'json',
+            success: function(response) {
+                $('#pending-count').text(response.pending || 0);
+                $('#shipping-count').text(response.shipping || 0);
+                $('#complete-count').text(response.completed || 0);
+                $('#canceled-count').text(response.canceled || 0);
+                $('#returned-count').text(response.returned || 0);
+            },
+            error: function() {
+                console.error('Failed to fetch user order counts');
+            }
+        });
     });
     </script>
+
     <script>
     $(document).ready(function() {
-        let table = $('#orderTable').DataTable({
-            "ajax": "_fetch_orders.php",
-            "columns": [{
-                    "data": "order_id"
-                },
-                {
-                    "data": "user_name"
-                },
-                {
-                    "data": "order_status"
-                },
-                {
-                    "data": "payment_method"
-                },
-                {
-                    "data": "total_amount"
-                },
-                {
-                    "data": "order_date"
-                }
-            ],
-            "destroy": true
+        const userId = <?php echo (int)$_GET['user_id']; ?>;
+
+        $.ajax({
+            url: '_fetch_user_orders.php',
+            type: 'GET',
+            data: {
+                user_id: userId
+            },
+            dataType: 'json',
+            success: function(data) {
+
+                $('#orderTable').DataTable({
+                    destroy: true,
+                    data: data.data,
+                    columns: [{
+                            data: 'order_id'
+                        },
+                        {
+                            data: 'user_name'
+                        },
+                        {
+                            data: 'order_status'
+                        },
+                        {
+                            data: 'payment_method'
+                        },
+                        {
+                            data: 'total_amount'
+                        },
+                        {
+                            data: 'order_date'
+                        }
+                    ]
+                });
+            },
+            error: function() {
+                console.error('Failed to fetch orders.');
+            }
         });
+    });
+    </script>
 
-        // Delegate dropdown change event
-        $('#orderTable tbody').on('change', '.order-status', function() {
-            let newStatus = $(this).val();
-            let orderId = $(this).data('id');
+    <script>
+    // Delegate change event because dropdowns are added dynamically
+    $(document).on('change', '.order-status', function() {
+        const orderId = $(this).data('id');
+        const newStatus = $(this).val();
 
-            $.ajax({
-                url: '_update_status.php',
-                method: 'POST',
-                data: {
-                    order_id: orderId,
-                    new_status: newStatus
-                },
-                success: function(response) {
+        $.ajax({
+            url: '_update_order_status.php',
+            method: 'POST',
+            data: {
+                order_id: orderId,
+                order_status: newStatus
+            },
+            success: function(response) {
+                const res = JSON.parse(response);
+                if (res.success) {
                     alert('Order status updated successfully ✅');
-                },
-                error: function() {
-                    alert('Error updating order status.');
+                } else {
+                    alert('Failed to update order status ❌: ' + res.error);
                 }
-            });
+            },
+            error: function() {
+                alert('AJAX error occurred while updating order status');
+            }
         });
     });
     </script>
-    <script>
-    $(document).ready(function() {
-        $('#userTable').DataTable({
-            "ajax": "_fetch_users.php",
-            "columns": [{
-                    "data": "user_id"
-                },
-                {
-                    "data": "name"
-                },
-                {
-                    "data": "email"
-                },
-                {
-                    "data": "phone"
-                },
-                {
-                    "data": "address"
-                },
-                {
-                    "data": "created_at"
-                }
-            ]
-        });
-    });
-    </script>
+
+
+
 </body>
 
 </html
